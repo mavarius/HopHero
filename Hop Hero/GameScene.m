@@ -7,38 +7,107 @@
 //
 
 #import "GameScene.h"
+#import "MLHero.h"
+#import "MLWorldGenerator.h"
+#import "MLPointsLabel.h"
 
-@implementation GameScene
+@interface GameScene ()
+@property BOOL isStarted;
+@property BOOL isGameOver;
+@end
+
+@implementation GameScene {
+    MLHero *hero;
+    SKNode *world;
+    MLWorldGenerator *generator;
+}
 
 -(void)didMoveToView:(SKView *)view {
     /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     
-    myLabel.text = @"Hello, World!";
-    myLabel.fontSize = 45;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
+    self.anchorPoint = CGPointMake(0.5, 0.5);
+    self.backgroundColor = [SKColor colorWithRed:0.0 green:0.0 blue:0.9 alpha:1.0];
     
-    [self addChild:myLabel];
+    world = [SKNode node];
+    [self addChild:world];
+    
+    generator = [MLWorldGenerator generatorWithWorld:world];
+    [self addChild:generator];
+    [generator populate];
+    
+    hero = [MLHero hero];
+    [world addChild:hero];
+    
+    MLPointsLabel *pointsLabel = [MLPointsLabel pointsLabelWithFontNamed:@"helvetica"];
+    pointsLabel.position = CGPointMake(0, 100);
+    [self addChild:pointsLabel];
+}
+
+-(void)start {
+    self.isStarted = YES;
+    [hero start];
+}
+
+-(void)clear {
+    NSLog(@"clear method called");
+}
+
+-(void)gameOver {
+    NSLog(@"gameOver method called");
+}
+
+-(void)didSimulatePhysics {
+    [self centerOnNode:hero];
+    [self handlePoints];
+    [self handleGeneration];
+    [self handleCleanup];
+}
+
+
+-(void)handlePoints {
+    [world enumerateChildNodesWithName:@"obstacle" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x < hero.position.x) {
+            MLPointsLabel *pointsLabel = (MLPointsLabel *)[self childNodeWithName:@"pointsLabel"];
+            [pointsLabel increment];
+        }
+    }];
+}
+
+-(void)handleGeneration {
+    [world enumerateChildNodesWithName:@"obstacle" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x < hero.position.x) {
+            node.name = @"obstacle_cancelled";
+            [generator generate];
+        }
+    }];
+}
+
+-(void)handleCleanup {
+    [world enumerateChildNodesWithName:@"ground" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x < hero.position.x - self.frame.size.width/2 - node.frame.size.width/2) {
+            [node removeFromParent];
+        }
+    }];
+    
+    [world enumerateChildNodesWithName:@"obstacle_cancelled" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x < hero.position.x - self.frame.size.width/2 - node.frame.size.width/2) {
+            [node removeFromParent];
+        }
+    }];
+}
+
+-(void)centerOnNode:(SKNode *)node{
+    CGPoint positionInScene = [self convertPoint:node.position fromNode:node.parent];
+    world.position = CGPointMake(world.position.x - positionInScene.x, world.position.y);
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-        
-        sprite.xScale = 0.5;
-        sprite.yScale = 0.5;
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
+    if (!self.isStarted) {
+        [self start];
+    } else if (self.isGameOver) {
+        [self clear];
+    } else {
+        [hero jump];
     }
 }
 

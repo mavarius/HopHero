@@ -17,6 +17,9 @@
 		CCC7174F1C3F56B6008060BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCC7174D1C3F56B6008060BB /* LaunchScreen.storyboard */; };
 		CCC7175A1C3F56B6008060BB /* Hop_HeroTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC717591C3F56B6008060BB /* Hop_HeroTests.m */; };
 		CCC717651C3F56B6008060BB /* Hop_HeroUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC717641C3F56B6008060BB /* Hop_HeroUITests.m */; };
+		CCC717741C3F643B008060BB /* MLHero.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC717731C3F643B008060BB /* MLHero.m */; };
+		CCC717771C3F8005008060BB /* MLWorldGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC717761C3F8005008060BB /* MLWorldGenerator.m */; };
+		CCC7177A1C40B9CE008060BB /* MLPointsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC717791C40B9CE008060BB /* MLPointsLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,12 @@
 		CCC717601C3F56B6008060BB /* Hop HeroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hop HeroUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC717641C3F56B6008060BB /* Hop_HeroUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hop_HeroUITests.m; sourceTree = "<group>"; };
 		CCC717661C3F56B6008060BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCC717721C3F643B008060BB /* MLHero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLHero.h; sourceTree = "<group>"; };
+		CCC717731C3F643B008060BB /* MLHero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLHero.m; sourceTree = "<group>"; };
+		CCC717751C3F8005008060BB /* MLWorldGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLWorldGenerator.h; sourceTree = "<group>"; };
+		CCC717761C3F8005008060BB /* MLWorldGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLWorldGenerator.m; sourceTree = "<group>"; };
+		CCC717781C40B9CE008060BB /* MLPointsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPointsLabel.h; sourceTree = "<group>"; };
+		CCC717791C40B9CE008060BB /* MLPointsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPointsLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +119,12 @@
 				CCC7173E1C3F56B6008060BB /* AppDelegate.m */,
 				CCC717401C3F56B6008060BB /* GameScene.h */,
 				CCC717411C3F56B6008060BB /* GameScene.m */,
+				CCC717781C40B9CE008060BB /* MLPointsLabel.h */,
+				CCC717791C40B9CE008060BB /* MLPointsLabel.m */,
+				CCC717751C3F8005008060BB /* MLWorldGenerator.h */,
+				CCC717761C3F8005008060BB /* MLWorldGenerator.m */,
+				CCC717721C3F643B008060BB /* MLHero.h */,
+				CCC717731C3F643B008060BB /* MLHero.m */,
 				CCC717431C3F56B6008060BB /* GameScene.sks */,
 				CCC717451C3F56B6008060BB /* GameViewController.h */,
 				CCC717461C3F56B6008060BB /* GameViewController.m */,
@@ -215,6 +230,7 @@
 				TargetAttributes = {
 					CCC717361C3F56B6008060BB = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 5G7HZK5TTW;
 					};
 					CCC717541C3F56B6008060BB = {
 						CreatedOnToolsVersion = 7.2;
@@ -279,10 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCC7177A1C40B9CE008060BB /* MLPointsLabel.m in Sources */,
 				CCC717471C3F56B6008060BB /* GameViewController.m in Sources */,
 				CCC7173F1C3F56B6008060BB /* AppDelegate.m in Sources */,
 				CCC717421C3F56B6008060BB /* GameScene.m in Sources */,
+				CCC717741C3F643B008060BB /* MLHero.m in Sources */,
 				CCC7173C1C3F56B6008060BB /* main.m in Sources */,
+				CCC717771C3F8005008060BB /* MLWorldGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,10 +440,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Hop Hero/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DanielCampbell.Hop-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -432,10 +454,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Hop Hero/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DanielCampbell.Hop-Hero";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
